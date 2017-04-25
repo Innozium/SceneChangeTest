@@ -101,22 +101,22 @@ public class SceneChangeManager : MonoBehaviour {
     }
 
 
-    // Update is called once per frame
-    void Update () {
+    //// Update is called once per frame
+    //void Update () {
 
-        ////테스트용
-        //if (Input.GetKeyDown(KeyCode.A))
-        //{
-        //    //fadeInOutCtrl.FadeIn(FadeInTime);
-        //    OnSceneChange("ScTest001");
-        //}
-        //else if (Input.GetKeyDown(KeyCode.S))
-        //{
-        //    //fadeInOutCtrl.FadeOut(FadeOutTime);
-        //    OnSceneChange("ScTest002");
-        //}
+    //    ////테스트용
+    //    //if (Input.GetKeyDown(KeyCode.A))
+    //    //{
+    //    //    //fadeInOutCtrl.FadeIn(FadeInTime);
+    //    //    OnSceneChange("ScTest001");
+    //    //}
+    //    //else if (Input.GetKeyDown(KeyCode.S))
+    //    //{
+    //    //    //fadeInOutCtrl.FadeOut(FadeOutTime);
+    //    //    OnSceneChange("ScTest002");
+    //    //}
 
-    }
+    //}
 
     //씬을 바꾸기 위해 외부에서 호출하는 함수
     public void OnSceneChange(string name)
@@ -140,13 +140,12 @@ public class SceneChangeManager : MonoBehaviour {
     //OnFadeIN 함수에서 호출할 코루틴
     IEnumerator CoFadeIN()
     {
-        //로딩이 끝났으니 END로.
-        sceneState = SCENESTATE.END;
-
+ 
         if (LoadPageProgressImg != null && LoadPage != null)
         {//별도의 이미지를 사용중이라면 마지막 갱신 뒤 비활성화해주자.
          //페이드인 따로 추가할까?
 
+            if (LoadPageProgressImg != null) LoadPageProgressImg.fillAmount = async.progress;
             //카메라 페이드 아웃
             this.fadeInOutCtrl.FadeOut(FadeOutTime);
             yield return new WaitForSeconds(FadeOutTime);
@@ -155,6 +154,9 @@ public class SceneChangeManager : MonoBehaviour {
 
         // 로드가 끝난후 페이드 인 들어가게 바꾼다.
         this.fadeInOutCtrl.FadeIn(this.FadeInTime);
+
+        //로딩이 끝났으니 END로.
+        sceneState = SCENESTATE.END;
     }
 
     //CoLoadGame에서 사용하는 함수
@@ -171,10 +173,10 @@ public class SceneChangeManager : MonoBehaviour {
         Debug.Log("넘어간뒤" + async.isDone);
         if (async.isDone)
         {
-            sceneState = SCENESTATE.END;
             if(LoadPageProgressImg != null && LoadPage != null)
             {//별도의 이미지를 사용중이라면 마지막 갱신 뒤 비활성화해주자.
-                //카메라 페이드 아웃
+             //카메라 페이드 아웃
+                if (LoadPageProgressImg != null) LoadPageProgressImg.fillAmount = async.progress;
                 this.fadeInOutCtrl.FadeOut(this.FadeOutTime);
                 yield return new WaitForSeconds(this.FadeOutTime);
                 LoadPage.SetActive(false);
@@ -183,6 +185,9 @@ public class SceneChangeManager : MonoBehaviour {
 
         // 로드가 끝난후 페이드 인 들어가게 바꾼다.
         this.fadeInOutCtrl.FadeIn(this.FadeInTime);
+
+        //로딩이 끝났으니 END로.
+        sceneState = SCENESTATE.END;
     }
 
     //OnSceneChange에서 실행시키는 코루틴 함수
