@@ -119,12 +119,12 @@ public class SceneChangeManager : MonoBehaviour {
     //}
 
     //씬을 바꾸기 위해 외부에서 호출하는 함수
-    public void OnSceneChange(string name)
+    public void OnSceneChange(string name, bool auto)
     {
         if (sceneState == SCENESTATE.LOAD) return;
 
         //CoLoadGame 코루틴을 실행한다.
-        StartCoroutine(CoLoadGame(name));
+        StartCoroutine(CoLoadGame(name, auto));
     }
 
     //외부에서 FadeIn을 요구할 때 사용할 함수
@@ -192,7 +192,7 @@ public class SceneChangeManager : MonoBehaviour {
 
     //OnSceneChange에서 실행시키는 코루틴 함수
     //씬 로딩에 대해 실행된다.
-    IEnumerator CoLoadGame(string sceneName)
+    IEnumerator CoLoadGame(string sceneName, bool auto)
     {
 
         //현재 로드상태를 설정한다.
@@ -249,6 +249,6 @@ public class SceneChangeManager : MonoBehaviour {
         async.allowSceneActivation = true;
 
         //로드가 끝났는지 체크할 코루틴을 실행한다.
-        StartCoroutine(CoDoneCheck());
+        if(auto) StartCoroutine(CoDoneCheck());
     }
 }

@@ -14,11 +14,11 @@ public class test : MonoBehaviour {
         //테스트용
         if (Input.GetKeyDown(KeyCode.A))
         {
-            SceneChangeManager.Instance.OnSceneChange("ScTest001");
+            SceneChangeManager.Instance.OnSceneChange("ScTest001", true);
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            SceneChangeManager.Instance.OnSceneChange("ScTest002");
+            SceneChangeManager.Instance.OnSceneChange("ScTest002", true);
         }
     }
 }
